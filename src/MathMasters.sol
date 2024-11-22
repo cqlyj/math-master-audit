@@ -11,6 +11,8 @@ library MathMasters {
     /*//////////////////////////////////////////////////////////////
                                  ERRORS
     //////////////////////////////////////////////////////////////*/
+
+    // @audit in version 0.8.3, there is no custom error
     error MathMasters__FactorialOverflow();
     error MathMasters__MulWadFailed();
     error MathMasters__DivWadFailed();
@@ -54,7 +56,9 @@ library MathMasters {
                 mstore(0x40, 0xbac65e5b) // `MathMasters__MulWadFailed()`.
                 revert(0x1c, 0x04)
             }
-            if iszero(sub(div(add(z, x), y), 1)) { x := add(x, 1) }
+            if iszero(sub(div(add(z, x), y), 1)) {
+                x := add(x, 1)
+            }
             z := add(iszero(iszero(mod(mul(x, y), WAD))), div(mul(x, y), WAD))
         }
     }
