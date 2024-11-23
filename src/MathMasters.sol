@@ -39,7 +39,25 @@ library MathMasters {
         // @solidity memory-safe-assembly
         assembly {
             // Equivalent to `require(y == 0 || x <= type(uint256).max / y)`.
-            if mul(y, gt(x, div(not(0), y))) {
+            if mul(
+                y,
+                gt(
+                    x,
+                    div(not(0), y)
+                    // not(0) => 0xfffffffffff...fff
+                    // if y = 0, the div will rerturn 0
+                )
+                // if not(0) / y > x => 0
+                // if not(0) / y < x => 1
+            ) {
+                // do this mul just to ensure the y is not 0
+                // @audit-low this will revert with a blank message
+                // 0x40 is the free memory pointer
+                // @audit why are you overwriting the free memory pointer?
+                // one of the two lines below is wrong and probably the first line
+                // mstore(0x00, 0xbac65e5b)
+
+                // @audit wrong function selector, it should be 0xa56044f7
                 mstore(0x40, 0xbac65e5b) // `MathMasters__MulWadFailed()`.
                 revert(0x1c, 0x04)
             }
