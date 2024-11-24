@@ -71,13 +71,23 @@ library MathMasters {
         assembly {
             // Equivalent to `require(y == 0 || x <= type(uint256).max / y)`.
             if mul(y, gt(x, div(not(0), y))) {
+                // @audit this is wrong same as above
                 mstore(0x40, 0xbac65e5b) // `MathMasters__MulWadFailed()`.
                 revert(0x1c, 0x04)
             }
+            // @audit this is wrong, not needed
             if iszero(sub(div(add(z, x), y), 1)) {
+                // iszero? ((z + x) / y - 1)
                 x := add(x, 1)
             }
-            z := add(iszero(iszero(mod(mul(x, y), WAD))), div(mul(x, y), WAD))
+            z := add(
+                iszero(
+                    iszero(
+                        mod(mul(x, y), WAD) // x * y % WAD => remainder
+                    ) // check if it divides evenly
+                ),
+                div(mul(x, y), WAD)
+            )
         }
     }
 
