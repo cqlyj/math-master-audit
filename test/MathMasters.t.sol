@@ -25,6 +25,13 @@ contract MathMastersTest is Base_Test {
         assertEq(MathMasters.mulWadUp(369, 271), 1);
     }
 
+    function testMulWadUpUnit() public {
+        uint256 x = 16877076170751140273593;
+        uint256 y = 10163048856434588128724;
+        uint256 result = MathMasters.mulWadUp(x, y);
+        console2.log("result", result);
+    }
+
     function testMulWadUpFuzz(uint256 x, uint256 y) public {
         // We want to skip the case where x * y would overflow.
         // Since Solidity 0.8.0 checks for overflows by default,
@@ -48,7 +55,10 @@ contract MathMastersTest is Base_Test {
         assertEq(MathMasters.sqrt(2704), 52);
         assertEq(MathMasters.sqrt(110889), 333);
         assertEq(MathMasters.sqrt(32239684), 5678);
-        assertEq(MathMasters.sqrt(type(uint256).max), 340282366920938463463374607431768211455);
+        assertEq(
+            MathMasters.sqrt(type(uint256).max),
+            340282366920938463463374607431768211455
+        );
     }
 
     function testSqrtFuzzUni(uint256 x) public pure {
