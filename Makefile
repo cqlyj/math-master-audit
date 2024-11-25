@@ -40,3 +40,5 @@ slither :; slither . --config-file slither.config.json
 aderyn :; aderyn . 
 
 halmos :; halmos --function check_testMulWadUpFuzz --solver-timeout-assertion 0
+
+certora :; certoraRun ./certora/MulWadUp.conf
