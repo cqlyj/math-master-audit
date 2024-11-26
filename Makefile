@@ -42,3 +42,5 @@ aderyn :; aderyn .
 halmos :; halmos --function check_testMulWadUpFuzz --solver-timeout-assertion 0
 
 certora :; certoraRun ./certora/MulWadUp.conf
+
+halmosSqrt :; halmos --function testSqrtFuzzUni --loop 1000
