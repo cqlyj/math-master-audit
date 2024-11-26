@@ -89,6 +89,8 @@ contract MathMastersTest is Base_Test {
 
     function testCertoraEdgeCase() public {
         uint256 x = 0xffff2b0000000000000001;
+        // certora find the bug in the tophalf, but not yet verified that the sqrt is not correct
+        // we need to keep test the x until both the tophalf and sqrt are broken
         CompactCodeBase cc = new CompactCodeBase();
         assertEq(cc.solmateTopHalf(x), cc.mathMastersTopHalf(x));
     }
