@@ -86,4 +86,10 @@ contract MathMastersTest is Base_Test {
         CompactCodeBase cc = new CompactCodeBase();
         assertEq(cc.solmateTopHalf(x), cc.mathMastersTopHalf(x));
     }
+
+    function testCertoraEdgeCase() public {
+        uint256 x = 0xffff2b0000000000000001;
+        CompactCodeBase cc = new CompactCodeBase();
+        assertEq(cc.solmateTopHalf(x), cc.mathMastersTopHalf(x));
+    }
 }
